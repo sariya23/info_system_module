@@ -14,12 +14,12 @@ def process_input(data: str) -> str:
 
     if data.isdigit():
         number = int(data)
-        return f"Число: {number}, квадрат: {number ** 2}"
+        return f"Введено число: {number}. Квадрат: {number ** 2}"
 
     if data == "":
-        return "Пустой ввод"
+        return "Ошибка: введены пустые данные"
 
-    return f"Строка: {data}, длина: {len(data)}"
+    return f"Введена строка: '{data}'. Длина: {len(data)}"
 
 
 def process_from_file(filename: str) -> str:
@@ -28,25 +28,25 @@ def process_from_file(filename: str) -> str:
             data = file.read()
         return process_input(data)
     except FileNotFoundError:
-        return "Файл не найден"
+        return f"Ошибка: файл '{filename}' не найден"
 
 
 def process_from_http(url: str) -> str:
     if url.strip() == "":
-        return "Пустая ссылка"
+        return "Ошибка: ссылка не введена"
     return f"Ссылка получена: {url}"
 
 
 def process_from_stdin() -> str:
-    data = input("Введите данные: ")
+    data = input("Введите текст или число: ")
     return process_input(data)
 
 
 def choose_input_type() -> InputType:
     print("Выберите режим ввода:")
     print("1 - ввод с клавиатуры")
-    print("2 - ввод из файла")
-    print("3 - ввод по ссылке")
+    print("2 - чтение из файла")
+    print("3 - ввод ссылки")
 
     choice = input("Введите номер режима: ").strip()
 
@@ -72,11 +72,13 @@ def process_data(in_type: InputType) -> str:
             url = input("Введите ссылку: ")
             return process_from_http(url)
         case _:
-            print("unknown input type")
+            print("Неизвестный тип ввода")
             exit(1)
 
 
 if __name__ == "__main__":
-    print("Запуск программы")
+    print("Программа запущена")
     input_type = choose_input_type()
-    print(process_data(input_type))
+    result = process_data(input_type)
+    print("Результат:")
+    print(result)
