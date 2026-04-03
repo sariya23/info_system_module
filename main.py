@@ -1,6 +1,6 @@
 from enum import Enum
 from sys import exit
-
+#test
 
 class InputType(Enum):
     UNKNOWN = 0
